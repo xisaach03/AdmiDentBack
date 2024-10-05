@@ -1,5 +1,8 @@
 import { Request, Response } from "express"
-import { HTTP_STATUS_CODES } from "../../types/http-status-codes";
+import { HTTP_STATUS_CODES } from "../types/http-status-codes";
+import auth from "../models/auth";
+import { generateToken } from "./token.controller";
+import { IUser } from '../types/user';
 
 class AuthController { 
     //Registro
