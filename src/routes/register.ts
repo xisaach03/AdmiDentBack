@@ -1,8 +1,9 @@
 import { Router } from "express";
+import auth from "../controllers/auth.controller"
 
 const router = Router();
 
-router.post('/register', (req, res) => {
+router.post('', auth.registerUser, (req, res) => {
     res.send('Crear usuario');
 })
 

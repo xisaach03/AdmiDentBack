@@ -17,7 +17,7 @@ class Authenticator {
         const newUser = new User({
             name,
             email,
-            password,
+            password: hashedPassword,
             role,
             status: 'active'
         });
