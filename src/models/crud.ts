@@ -1,13 +1,18 @@
+import { Request, Response } from 'express';
 import User from '../models/users'
+import { HTTP_STATUS_CODES } from '../types/http-status-codes';
 
 export const getAll = () => {
 
 }
 
-export const getByEmail = async (email: string) => {
+export const getByEmail = async (req: Request, res: Response) => {
+    const { email } = req.query
+    console.log("email:", email)
     try {
         const user = await User.findOne({ email: email })
-        return user;
+        res.status(HTTP_STATUS_CODES.SUCCESS).json(user)
+        //return user;
     } catch {
         throw new Error('Wrong User or does not exist');
     }
