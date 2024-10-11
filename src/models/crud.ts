@@ -6,6 +6,7 @@ export const getAll = () => {
 
 }
 
+//LISTO: http://localhost:3000/home?email=ximelunch@example.com
 export const getByEmail = async (req: Request, res: Response) => {
     const { email } = req.query
     console.log("email:", email)
@@ -43,6 +44,7 @@ export const updateByEmial = async (email: string, name?: string, status?: strin
         throw new Error('Wrong User or does not exist');
     }
 }
+
 
 export const changePassword = async (email: string, newPassword: string) => {
     try {
