@@ -1,22 +1,12 @@
 import bcrypt from 'bcrypt';
 import User from '../models/users'
-import jwt from 'jsonwebtoken';
 
 
 const SALT_ROUNDS = 7;
 
 class Authenticator {
 
-//LISTO: http://localhost:3000/register
-/*
-{
-  "name": "John",
-  "email": "JohnDoe@example.com",
-  "password": "JohnDoesPassword",
-  "role": "Doctor",
-  "status": "active"
-}
-*/
+//LISTO
     registerUser = async (name: string, email: string, password: string, role: string) => {
 
         const existingUser = await User.findOne({ email });
@@ -38,9 +28,8 @@ class Authenticator {
         return newUser;
     }
 
-//
     loginUser = async (email: string, password: string) => {
-        console.log(password)
+        console.log(email)
         const user = await User.findOne({ email });
         if (!user) {
             throw new Error('Wrong email');
@@ -49,8 +38,8 @@ class Authenticator {
         if (user.status != 'active') {
             throw new Error('Account desactivated');
         }
-        const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-        const isPasswordValid = await bcrypt.compare(hashedPassword, user.password);
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             throw new Error('Wrong password')
         }
