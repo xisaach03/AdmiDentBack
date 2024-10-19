@@ -1,10 +1,18 @@
 import { Request, Response } from 'express';
 import User from '../models/users'
 import { HTTP_STATUS_CODES } from '../types/http-status-codes';
-import { strict } from 'assert';
+import bcrypt from 'bcrypt';
 
-export const getAll = () => {
+const SALT_ROUNDS = 7;
 
+export const getAll = async (req: Request, res: Response) => {
+    try {
+        const users = await User.find({});
+        console.log(users);
+        res.send(users)
+      } catch (err) {
+        console.error(err);
+      }
 }
 
 //LISTO: http://localhost:3000/home?email=JohnDoe@example.com
@@ -63,7 +71,8 @@ export const changePassword = async (email: string, newPassword: string) => {
     try {
         const user = await User.findOne({ email: email });
         if (user) {
-            user.password = newPassword;
+            const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
+            user.password = hashedPassword;
         }
         return user;
     } catch {

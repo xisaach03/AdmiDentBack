@@ -1,12 +1,15 @@
 import { Router, Request, Response } from "express";
-import { deleteByEmail, getByEmail, updateByEmail } from "../models/crud"
+import { deleteByEmail, getAll, getByEmail, updateByEmail } from "../models/crud"
 
 const router = Router();
 
-router.get('', getByEmail, (req, res) => {
+// router.get('', getByEmail, (req, res) => {
+//     res.send('Lista de usuarios');
+// })
+
+router.get('', getAll, (req, res) => {
     res.send('Lista de usuarios');
 })
-
 
 router.delete('', deleteByEmail, (req, res) => {
     res.send('User deleted')
