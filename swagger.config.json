@@ -1,0 +1,36 @@
+{
+    "swaggerDefinition": {
+        "openapi": "3.1.0",
+        "info": {
+            "title": "AdmiDent API",
+            "description": "This API provides a comprehensive set of endpoints for managing dental clinic operations, including user management, appointment scheduling, and treatment tracking. It is designed to facilitate interactions between the frontend and backend components of the AdmiDent application.",
+            "version": "1.0.0"
+        },
+        "servers": [
+            { 
+                "url": "http://localhost:3000",
+                "description": "Local server for development and testing."
+            }
+        ],
+        "tags": [
+            {
+                "name": "Index",
+                "description": "Operation for checking API status"
+            },
+            {
+                "name": "Home",
+                "description": "Operations for managing users, including listing users, deleting by email, and updating user details."
+            },
+            {
+                "name": "Register",
+                "description": "Operations for user registration. This includes creating new users in the system by providing necessary details such as name, email, password, and role. Responses will indicate success or failure of the registration process."
+            },
+            {
+                "name": "Login",
+                "description": "Operations for user authentication. This includes validating user credentials (email and password) to allow access to the application. Successful logins return user details, while unsuccessful attempts provide appropriate error messages."
+            }
+            
+        ]
+    },
+    "apis": ["./**/*.ts"]
+}

@@ -9,7 +9,7 @@ const SALT_ROUNDS = 7;
 class Authenticator {
 
 //LISTO: http://localhost:3000/register
-/*
+/* PARA PROBAR EN POSTMAN
 {
   "name": "John",
   "email": "JohnDoe@example.com",

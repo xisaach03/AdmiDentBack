@@ -2,6 +2,9 @@ import express from 'express';
 import routes from './routes';
 import { config } from 'dotenv';
 import { connect } from 'mongoose';
+import swaggerConfig from './../swagger.config.json';
+import swaggerJsDoc from 'swagger-jsdoc';
+import {serve, setup} from 'swagger-ui-express';
 
 config();
 
@@ -11,6 +14,9 @@ const port = process.env.PORT || 3000;
 
 const dbUrl = process.env.DB_URL
 console.log('Mongo URL: ', dbUrl);
+
+const swaggerDocs = swaggerJsDoc(swaggerConfig);
+app.use('/swagger', serve, setup(swaggerDocs));
 
 app.use(express.json());
 
