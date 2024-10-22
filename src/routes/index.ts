@@ -3,6 +3,8 @@ import welcomeRoutes from './welcome';
 import registerRoutes from './register';
 import loginRoutes from './login';
 import homeRoutes from './home';
+import { logout } from "../controllers/cookie.controller";
+import admin from "./admin";
 
 
 const router = Router();
@@ -29,9 +31,14 @@ router.get('', (req, res) => {
     res.send('Api works!');
 });
 
+router.post('/logout', logout, (req, res) => {
+    res.send("You've logged out successfuly")
+})
+
 router.use('/welcome', welcomeRoutes);
 router.use('/register', registerRoutes);
 router.use('/login', loginRoutes);
 router.use('/home', homeRoutes);
+router.use('/admin', admin)
 
 export default router;

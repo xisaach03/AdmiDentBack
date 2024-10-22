@@ -2,7 +2,7 @@ import { Router } from "express";
 import auth from "../controllers/auth.controller"
 import cookieParser from 'cookie-parser';
 import { config } from 'dotenv';
-import authMiddleware from "../controllers/cookie.controller";
+import { authMiddleware } from "../controllers/cookie.controller";
 config();
 
 const router = Router();
@@ -80,5 +80,6 @@ router.get('', authMiddleware, (req, res) => {
     const name = req.user?.name;
     res.send(`Welcome ${name}`);
 })
+//Test
 
 export default router;

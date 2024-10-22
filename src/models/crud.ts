@@ -66,16 +66,3 @@ export const updateByEmail = async (req: Request, res: Response) => {
     }
 }
 
-
-export const changePassword = async (email: string, newPassword: string) => {
-    try {
-        const user = await User.findOne({ email: email });
-        if (user) {
-            const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
-            user.password = hashedPassword;
-        }
-        return user;
-    } catch {
-        throw new Error('Wrong User or does not exist');
-    }
-}

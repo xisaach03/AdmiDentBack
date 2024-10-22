@@ -114,5 +114,4 @@ router.put('', updateByEmail, (req, res) => {
     res.send('Email updated');
 });
 
-
 export default router;
