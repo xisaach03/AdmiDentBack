@@ -7,7 +7,8 @@ const SALT_ROUNDS = 7;
 
 export const isAdminMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
-    const { role } = req.body.user;
+    const { role } = req.body;
+    console.log("role: ", role)
     if( role === 'Admin'){
         res.sendStatus(HTTP_STATUS_CODES.SUCCESS)
     } else {

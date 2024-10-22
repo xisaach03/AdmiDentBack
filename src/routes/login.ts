@@ -2,7 +2,7 @@ import { Router } from "express";
 import auth from "../controllers/auth.controller"
 import cookieParser from 'cookie-parser';
 import { config } from 'dotenv';
-import { authMiddleware } from "../controllers/cookie.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
 config();
 
 const router = Router();

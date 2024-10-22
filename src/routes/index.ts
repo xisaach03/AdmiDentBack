@@ -3,7 +3,7 @@ import welcomeRoutes from './welcome';
 import registerRoutes from './register';
 import loginRoutes from './login';
 import homeRoutes from './home';
-import { logout } from "../controllers/cookie.controller";
+import { logout } from "../middlewares/auth.middleware";
 import admin from "./admin";
 
 
