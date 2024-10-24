@@ -26,9 +26,12 @@ class AuthController {
         if (pswdValid) {
             req.body.found = pswdValid;
             req.body.user = user;
-            next();
+            res.cookie('user', JSON.stringify(user), { signed: true });
+            res.sendStatus(HTTP_STATUS_CODES.SUCCESS);
+        } else if (!pswdValid) {
+            res.sendStatus(HTTP_STATUS_CODES.AUTHORIZATION);
         } else {
-            res.sendStatus(400);
+            res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST)
         }
     };
 }
