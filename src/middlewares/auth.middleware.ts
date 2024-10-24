@@ -13,6 +13,8 @@ declare global {
 
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  console.log('Signed cookies: ', req.signedCookies)
+  console.log('cookies????: ', req.cookies)
     const signedUser = req.signedCookies.user;
     console.log('Signed cookie: ', signedUser);
     
@@ -22,6 +24,18 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     } else {
         res.sendStatus(HTTP_STATUS_CODES.AUTHORIZATION);
     }
+}
+
+export const anotherAuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  const signedUser = req.signedCookies.user;
+  console.log('Signed cookie: ', signedUser);
+  
+  if (signedUser) {
+      req.user = JSON.parse(signedUser);
+      next();
+  } else {
+      res.sendStatus(HTTP_STATUS_CODES.AUTHORIZATION);
+  }
 }
 
 export const logout = (req: Request, res: Response) => {
