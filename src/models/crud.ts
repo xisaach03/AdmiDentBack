@@ -1,7 +1,13 @@
 import { Request, Response } from 'express';
 import User from '../models/users'
 import { HTTP_STATUS_CODES } from '../types/http-status-codes';
-import bcrypt from 'bcrypt';
+import { S3Client } from "@aws-sdk/client-s3"
+import multer from "multer";
+import multers3 from "multer-s3";
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 
 const SALT_ROUNDS = 7;
 
@@ -66,3 +72,10 @@ export const updateByEmail = async (req: Request, res: Response) => {
     }
 }
 
+const s3 = new S3Client({
+    region: process.env.AWS_REGION,
+    credentials: {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
+    },
+  });
