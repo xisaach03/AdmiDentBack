@@ -126,7 +126,10 @@ router.post('/upload', upload.single('image'), async (req: MulterRequest, res: R
     if (!req.file) {
       res.status(HTTP_STATUS_CODES.NOT_FOUND).json({ message: 'Please upload a file.' });
       return; // Aquí no devolvemos un Response, solo enviamos la respuesta.
+
     }
+
+    console.log('Archivo recibido:', req.file); // Esto te ayudará a verificar si el archivo está llegando
 
     // Llamada al servicio para subir imagen a S3 y guardar en MongoDB
     const imageUrl = await uploadImageToS3(req.file);
