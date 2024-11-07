@@ -1,5 +1,7 @@
 import { Router, Request, Response } from "express";
 import { deleteByEmail, getAll, getByEmail, updateByEmail } from "../models/crud"
+import { HTTP_STATUS_CODES } from "../types/http-status-codes";
+import { uploadImageToS3, upload } from '../controllers/s3.controller';
 
 const router = Router();
 
@@ -112,6 +114,27 @@ router.delete('', deleteByEmail, (req, res) => {
  */
 router.put('', updateByEmail, (req, res) => {
     res.send('Email updated');
+});
+
+// Extiende el tipo Request para incluir el archivo de Multer
+interface MulterRequest extends Request {
+  file?: Express.Multer.File;
+}
+
+router.post('/upload', upload.single('image'), async (req: MulterRequest, res: Response): Promise<void> => {
+  try {
+    if (!req.file) {
+      res.status(HTTP_STATUS_CODES.NOT_FOUND).json({ message: 'Please upload a file.' });
+      return; // Aquí no devolvemos un Response, solo enviamos la respuesta.
+    }
+
+    // Llamada al servicio para subir imagen a S3 y guardar en MongoDB
+    const imageUrl = await uploadImageToS3(req.file);
+
+    res.status(HTTP_STATUS_CODES.SUCCESS).json({ message: 'File uploaded successfully', url: imageUrl });
+  } catch (error) {
+    res.status(HTTP_STATUS_CODES.SERVER_ERROR).json({ message: 'Error uploading file', error: (error as Error).message });
+  }
 });
 
 export default router;
