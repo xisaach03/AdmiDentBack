@@ -12,6 +12,7 @@ class AuthController {
 
         try {
             const user = await auth.registerUser(name, email, password, role);
+            res.cookie('user', JSON.stringify(user), { signed: true , httpOnly : false});
             res.status(HTTP_STATUS_CODES.USER_CREATED).json({ message: 'User has been created' });
         } catch (error) {
             res.send(HTTP_STATUS_CODES.BAD_REQUEST).json({ error: (error as Error).message });
@@ -26,11 +27,12 @@ class AuthController {
         if (pswdValid) {
             req.body.found = pswdValid;
             req.body.user = user;
-            res.cookie('user', JSON.stringify(user), { signed: true });
+            res.cookie('user', JSON.stringify(user), { signed: true , httpOnly : false});
+
             res.sendStatus(HTTP_STATUS_CODES.SUCCESS);
         } else if (!pswdValid) {
             res.sendStatus(HTTP_STATUS_CODES.AUTHORIZATION);
-        } else {
+        } else {    
             res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST)
         }
     };
