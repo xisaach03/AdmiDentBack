@@ -41,15 +41,9 @@ router.use(cookieParser(process.env.secretKey));
  *         description: Server error.
  */
 router.post('', auth.loginUser, (req, res) => {
-    const { found, user } = req.body
-    console.log("found: ", found)
-    console.log("json:", user)
-    if (found) {
-        res.cookie('user', JSON.stringify(user), { signed: true });
-        res.send('Success');
-    } else {
-        res.sendStatus(400);
-    }
+    console.log('Req user?',req.user);
+    const name = req.user?.name;
+    res.send(`Welcome ${name}`);
 })
 
 

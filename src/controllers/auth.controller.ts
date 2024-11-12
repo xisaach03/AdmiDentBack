@@ -13,12 +13,16 @@ class AuthController {
 
         try {
             const user = await auth.registerUser(name, email, password, role);
+
             // Simulación de registro (aquí podrías agregar la lógica real con una base de datos)
             console.log('Nuevo usuario registrado:', name);
 
             // Enviar notificación a todos los clientes conectados
             sendNotification(`El usuario ${name} registrado exitosamente`);
-            res.status(HTTP_STATUS_CODES.USER_CREATED).json({ message: 'User has been created' });
+          
+            res.cookie('user', JSON.stringify(user), { signed: true , httpOnly : false});
+          
+          res.status(HTTP_STATUS_CODES.USER_CREATED).json({ message: 'User has been created' });
         } catch (error) {
             res.send(HTTP_STATUS_CODES.BAD_REQUEST).json({ error: (error as Error).message });
         }
@@ -32,9 +36,13 @@ class AuthController {
         if (pswdValid) {
             req.body.found = pswdValid;
             req.body.user = user;
-            next();
-        } else {
-            res.sendStatus(400);
+            res.cookie('user', JSON.stringify(user), { signed: true , httpOnly : false});
+
+            res.sendStatus(HTTP_STATUS_CODES.SUCCESS);
+        } else if (!pswdValid) {
+            res.sendStatus(HTTP_STATUS_CODES.AUTHORIZATION);
+        } else {    
+            res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST)
         }
     };
 }

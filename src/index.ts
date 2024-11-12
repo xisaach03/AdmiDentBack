@@ -15,8 +15,12 @@ const app = express();
 const port = process.env.PORT || 3000;
 //app.use(routes);
 
-app.use(cors());
-
+app.use(cors({
+    origin: 'http://localhost:4200',  // Cambia esto si tu frontend está en otro puerto o dominio
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type'],
+  }));
+  
 const dbUrl = process.env.DB_URL
 console.log('Mongo URL: ', dbUrl);
 
