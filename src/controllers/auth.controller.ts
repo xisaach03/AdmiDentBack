@@ -3,6 +3,7 @@ import { HTTP_STATUS_CODES } from "../types/http-status-codes";
 import auth from "../models/auth";
 import User from '../models/users'
 import bcrypt from 'bcrypt';
+import { sendNotification } from "./socket.controller";
 
 class AuthController { 
     //Registro
@@ -12,6 +13,11 @@ class AuthController {
 
         try {
             const user = await auth.registerUser(name, email, password, role);
+            // Simulación de registro (aquí podrías agregar la lógica real con una base de datos)
+            console.log('Nuevo usuario registrado:', name);
+
+            // Enviar notificación a todos los clientes conectados
+            sendNotification(`El usuario ${name} registrado exitosamente`);
             res.status(HTTP_STATUS_CODES.USER_CREATED).json({ message: 'User has been created' });
         } catch (error) {
             res.send(HTTP_STATUS_CODES.BAD_REQUEST).json({ error: (error as Error).message });
