@@ -4,8 +4,10 @@ import { config } from 'dotenv';
 import { connect } from 'mongoose';
 import swaggerConfig from './../swagger.config.json';
 import swaggerJsDoc from 'swagger-jsdoc';
-import {serve, setup} from 'swagger-ui-express';
+import { serve, setup } from 'swagger-ui-express';
 import cors from 'cors';
+import { Server, Socket } from 'socket.io';
+import { initializeSocket } from './controllers/socket.controller';
 
 config();
 
@@ -27,12 +29,26 @@ app.use('/swagger', serve, setup(swaggerDocs));
 
 app.use(express.json());
 
+app.use(routes);
 connect(dbUrl as string).then(res => {
     console.log('Habemus mongoose');
-    app.use(routes);
-    app.listen(port, () => {
+    const server = app.listen(port, () => {
         console.log(`App is running in port`, port);
     })
+
+    const io = new Server(server, {
+        cors: {
+            origin: '*',
+            methods: ['GET', 'POST']
+        }
+    })
+
+    initializeSocket(io)
+
+    // io.on('connection', (socket: Socket) => {
+    //     console.log('Client connected: ', socket.id)
+    // })
+
 }).catch(err => {
     console.error('Error de conexión a MongoDB:', err);
 });
