@@ -7,7 +7,7 @@ import { sendNotification } from "./socket.controller";
 
 class AuthController { 
     //Registro
-    registerUser = async (req: Request, res: Response) => {
+    registerUser = async (req: Request, res: Response, next: NextFunction) => {
         console.log(req.body)
         const { name, email, password, role } = req.body;
 
@@ -22,9 +22,9 @@ class AuthController {
           
             res.cookie('user', JSON.stringify(user), { signed: true , httpOnly : false});
           
-          res.status(HTTP_STATUS_CODES.USER_CREATED).json({ message: 'User has been created' });
+          next();
         } catch (error) {
-            res.send(HTTP_STATUS_CODES.BAD_REQUEST).json({ error: (error as Error).message });
+            res.status(HTTP_STATUS_CODES.BAD_REQUEST).json({ error: (error as Error).message });
         }
     }
 

@@ -8,6 +8,7 @@ import { serve, setup } from 'swagger-ui-express';
 import cors from 'cors';
 import { Server, Socket } from 'socket.io';
 import { initializeSocket } from './controllers/socket.controller';
+import cookieParser from 'cookie-parser';
 
 config();
 
@@ -28,6 +29,7 @@ const swaggerDocs = swaggerJsDoc(swaggerConfig);
 app.use('/swagger', serve, setup(swaggerDocs));
 
 app.use(express.json());
+app.use(cookieParser(process.env.secretKey));
 
 app.use(routes);
 connect(dbUrl as string).then(res => {
@@ -39,7 +41,8 @@ connect(dbUrl as string).then(res => {
     const io = new Server(server, {
         cors: {
             origin: '*',
-            methods: ['GET', 'POST']
+            methods: ['GET', 'POST'],
+            credentials: true
         }
     })
 

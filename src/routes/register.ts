@@ -1,5 +1,6 @@
 import { Router } from "express";
 import auth from "../controllers/auth.controller"
+import { sendRegisterEmail } from "../controllers/email.controller";
 
 const router = Router();
 
@@ -51,8 +52,6 @@ const router = Router();
  *       500:
  *         description: Server error.
  */
-router.post('', auth.registerUser, (req, res) => {
-    res.send('Crear usuario');
-})
+router.post('', auth.registerUser, sendRegisterEmail)
 
 export default router;

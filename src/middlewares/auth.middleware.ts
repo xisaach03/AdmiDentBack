@@ -26,18 +26,6 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     }
 }
 
-export const anotherAuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const signedUser = req.signedCookies.user;
-  console.log('Signed cookie: ', signedUser);
-  
-  if (signedUser) {
-      req.user = JSON.parse(signedUser);
-      next();
-  } else {
-      res.sendStatus(HTTP_STATUS_CODES.AUTHORIZATION);
-  }
-}
-
 export const logout = (req: Request, res: Response) => {
   res.clearCookie('user');
   res.status(HTTP_STATUS_CODES.SUCCESS).send('Logout exitoso');
