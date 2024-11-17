@@ -20,6 +20,7 @@ app.use(cors({
     origin: 'http://localhost:4200',  // Cambia esto si tu frontend está en otro puerto o dominio
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
+    credentials: true
   }));
   
 const dbUrl = process.env.DB_URL
