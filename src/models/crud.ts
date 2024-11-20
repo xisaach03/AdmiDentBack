@@ -42,7 +42,7 @@ export const deleteByEmail = async (req: Request, res: Response) => {
         const user = await User.deleteOne({ email: email });
         res.status(HTTP_STATUS_CODES.SUCCESS).json(user)
     } catch {
-        throw new Error('Wrong User or does not exist');
+        res.status(HTTP_STATUS_CODES.NOT_FOUND).send('Wrong User or does not exist');
     }
 }
 

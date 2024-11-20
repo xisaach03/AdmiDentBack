@@ -6,7 +6,7 @@ import swaggerConfig from './../swagger.config.json';
 import swaggerJsDoc from 'swagger-jsdoc';
 import { serve, setup } from 'swagger-ui-express';
 import cors from 'cors';
-import { Server, Socket } from 'socket.io';
+import { Server } from 'socket.io';
 import { initializeSocket } from './controllers/socket.controller';
 import cookieParser from 'cookie-parser';
 
@@ -17,7 +17,7 @@ const port = process.env.PORT || 3000;
 //app.use(routes);
 
 app.use(cors({
-    origin: 'http://localhost:4200',  // Cambia esto si tu frontend está en otro puerto o dominio
+    origin: 'http://localhost:4200',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
   }));

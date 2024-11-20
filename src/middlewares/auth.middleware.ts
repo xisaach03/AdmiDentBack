@@ -11,10 +11,8 @@ declare global {
     }
 }
 
-
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   console.log('Signed cookies: ', req.signedCookies)
-  console.log('cookies????: ', req.cookies)
     const signedUser = req.signedCookies.user;
     console.log('Signed cookie: ', signedUser);
     
