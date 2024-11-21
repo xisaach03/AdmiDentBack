@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { deleteByEmail, getAll, getByEmail, updateByEmail } from "../models/crud"
+import { deleteByEmail, getAll, getByEmail, updateByEmail , getImages } from "../models/crud"
 import { HTTP_STATUS_CODES } from "../types/http-status-codes";
 import { uploadImageToS3, upload } from '../controllers/s3.controller';
 
@@ -138,6 +138,10 @@ router.post('/upload', upload.single('image'), async (req: MulterRequest, res: R
   } catch (error) {
     res.status(HTTP_STATUS_CODES.SERVER_ERROR).json({ message: 'Error uploading file', error: (error as Error).message });
   }
+});
+
+router.get('/images', getImages , (req , res) => {
+  res.send('Todos los usuarios'); 
 });
 
 export default router;
