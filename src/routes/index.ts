@@ -5,7 +5,9 @@ import loginRoutes from './login';
 import homeRoutes from './home';
 import { logout } from "../middlewares/auth.middleware";
 import admin from "./admin";
-
+import clientRoutes from './client';
+import treatmentRoutes from './treatment';
+import passport from "./passport";
 
 const router = Router();
 
@@ -39,6 +41,10 @@ router.use('/welcome', welcomeRoutes);
 router.use('/register', registerRoutes);
 router.use('/login', loginRoutes);
 router.use('/home', homeRoutes);
-router.use('/admin', admin)
+router.use('/admin', admin);
+router.use('/clients', clientRoutes);
+router.use('/treatment', treatmentRoutes);
+router.use("/auth", passport);
+
 
 export default router;
