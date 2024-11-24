@@ -4,6 +4,9 @@ import path from 'path';
 import nodemailer from 'nodemailer';
 
 export function sendRegisterEmail(req: Request, res: Response) {
+
+    const { name } = req.body
+
     const transporter = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
         port: Number(process.env.EMAIL_PORT),
@@ -27,7 +30,7 @@ export function sendRegisterEmail(req: Request, res: Response) {
 
     transporter.sendMail(mailOptions).then(response => {
         console.log('Response: ', response);
-        res.send('Email sent').status(200);
+        res.send(`Bienvenido: ${name}`,).status(200);
     }).catch(error => {
         console.log('Error: ', error);
         res.send('Failed to send email').status(400);

@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
 import User from '../models/users'
+import Image from '../types/image';
 import { HTTP_STATUS_CODES } from '../types/http-status-codes';
 import { S3Client } from "@aws-sdk/client-s3"
 import multer from "multer";
 import multers3 from "multer-s3";
 import dotenv from 'dotenv';
+import { stringify } from 'querystring';
 
 dotenv.config();
 
@@ -42,7 +44,7 @@ export const deleteByEmail = async (req: Request, res: Response) => {
         const user = await User.deleteOne({ email: email });
         res.status(HTTP_STATUS_CODES.SUCCESS).json(user)
     } catch {
-        throw new Error('Wrong User or does not exist');
+        res.status(HTTP_STATUS_CODES.NOT_FOUND).send('Wrong User or does not exist');
     }
 }
 
@@ -70,6 +72,16 @@ export const updateByEmail = async (req: Request, res: Response) => {
     } catch {
         throw new Error('Wrong User or does not exist');
     }
+}
+
+export const getImages = async (req : Request , res : Response) =>{
+    try {
+        const images = await Image.find({});
+        console.log(images);
+        res.send(images)
+      } catch (err) {
+        console.error(err);
+      }
 }
 
 const s3 = new S3Client({
