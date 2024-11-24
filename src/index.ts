@@ -9,7 +9,10 @@ import cors from 'cors';
 import { Server } from 'socket.io';
 import { initializeSocket } from './controllers/socket.controller';
 import cookieParser from 'cookie-parser';
-import clientRoutes from './routes/client.routes';
+import { Express } from 'express-serve-static-core';
+import session from "express-session";
+import passport from "./middlewares/google-auth";
+
 
 config();
 
@@ -29,11 +32,23 @@ console.log('Mongo URL: ', dbUrl);
 const swaggerDocs = swaggerJsDoc(swaggerConfig);
 app.use('/swagger', serve, setup(swaggerDocs));
 
+
 app.use(express.json());
 app.use(cookieParser(process.env.secretKey));
 
+app.use(
+    session({
+      secret: "tu_secreto", // Cambiar a un secreto seguro en producción
+      resave: false,
+      saveUninitialized: true,
+    })
+  );
+  
+  // Inicializar Passport
+  app.use(passport.initialize());
+  app.use(passport.session());
+
 app.use(routes);
-app.use('/api/clients', clientRoutes);
 
 connect(dbUrl as string)
     .then(() => {
@@ -56,3 +71,7 @@ connect(dbUrl as string)
     .catch(err => {
         console.error('Error de conexión a MongoDB:', err);
     });
+function googleAuth(app: Express) {
+    throw new Error('Function not implemented.');
+}
+

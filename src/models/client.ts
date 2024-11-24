@@ -1,17 +1,21 @@
-import { Schema, model, connect, Model } from 'mongoose';
-
-const clientDBConnection = connect(process.env.CLIENT_DB_URI || '')
-  .then(() => console.log('Conexión exitosa a la base de datos de clientes'))
-  .catch((err) => console.error('Error al conectar con la base de datos de clientes:', err));
+import { Schema, model, Model } from 'mongoose';
+import { Treatment } from '../types/treatment';
 
 const clientSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
   phone: { type: String },
-  password: { type: String, required: true },  // Agregando el campo password
+  gender: { type: String},
+  Birthday: { type: String },
+  Age: { type: Number },
+  Occupation: { tpye: String },
+  Hobbies: { type: String },
+  EmergencyContact: { type: String },
+  Treatments: { type: Array }
 });
 
-const Client: Model<any> = model('Client', clientSchema);
+const client = model('Client', clientSchema);
 
-export default Client;
+export default client;

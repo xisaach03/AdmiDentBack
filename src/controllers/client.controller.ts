@@ -26,22 +26,16 @@ export const getClients = async (_req: Request, res: Response) => {
 export const getClientById = async (req: Request, res: Response) => {
   try {
     const client = await Client.findById(req.params.id);
-    if (!client) {
-      return res.status(HTTP_STATUS_CODES.NOT_FOUND).json({ message: 'Cliente no encontrado' });
-    }
     res.status(HTTP_STATUS_CODES.SUCCESS).json(client);
   } catch (error) {
     const err = error as Error;
-    res.status(HTTP_STATUS_CODES.SERVER_ERROR).json({ message: err.message });
+    res.status(HTTP_STATUS_CODES.NOT_FOUND).json({ message: err.message });
   }
 };
 
 export const updateClient = async (req: Request, res: Response) => {
   try {
-    const updatedClient = await Client.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedClient) {
-      return res.status(HTTP_STATUS_CODES.NOT_FOUND).json({ message: 'Cliente no encontrado' });
-    }
+    const updatedClient = await Client.findByIdAndUpdate(req.body._id, req.body, { new: true });
     res.status(HTTP_STATUS_CODES.SUCCESS).json(updatedClient);
   } catch (error) {
     const err = error as Error;
@@ -52,9 +46,6 @@ export const updateClient = async (req: Request, res: Response) => {
 export const deleteClient = async (req: Request, res: Response) => {
   try {
     const deletedClient = await Client.findByIdAndDelete(req.params.id);
-    if (!deletedClient) {
-      return res.status(HTTP_STATUS_CODES.NOT_FOUND).json({ message: 'Cliente no encontrado' });
-    }
     res.status(HTTP_STATUS_CODES.NO_CONTENT).send();
   } catch (error) {
     const err = error as Error;
