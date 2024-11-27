@@ -123,7 +123,9 @@ interface MulterRequest extends Request {
 }
 
 router.post('/upload', upload.single('image'), async (req: MulterRequest, res: Response): Promise<void> => {
-  const email = req.query.email
+  const email = req.headers['email'] as string; // Leer el email desde los encabezados
+  console.log('Email recibido:', email); // Verifica que el email se recibe correctamente
+
   try {
     if (!req.file) {
       res.status(HTTP_STATUS_CODES.NOT_FOUND).json({ message: 'Please upload a file.' });
