@@ -4,11 +4,16 @@ import { IUser } from '../types/user';
 import { HTTP_STATUS_CODES } from '../types/http-status-codes';
 
 declare global {
-    namespace Express {
-      interface Request {
-        user?: IUser;
-      }
-    }
+  namespace Express {
+      interface User extends IUser {}
+  }
+}
+
+// Opcionalmente redefine AuthenticatedRequest si lo usas:
+declare module 'passport' {
+  interface AuthenticatedRequest {
+      user?: IUser;
+  }
 }
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
