@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
 import nodemailer from 'nodemailer';
+import { HTTP_STATUS_CODES } from '../types/http-status-codes';
 
 export function sendRegisterEmail(req: Request, res: Response) {
 
@@ -30,9 +31,9 @@ export function sendRegisterEmail(req: Request, res: Response) {
 
     transporter.sendMail(mailOptions).then(response => {
         console.log('Response: ', response);
-        res.send(`Bienvenido: ${name}`,).status(200);
+        res.send(`Bienvenido: ${name}`,).status(HTTP_STATUS_CODES.USER_CREATED);
     }).catch(error => {
         console.log('Error: ', error);
-        res.send('Failed to send email').status(400);
+        res.send('Failed to send email').status(HTTP_STATUS_CODES.BAD_REQUEST);
     })
 }

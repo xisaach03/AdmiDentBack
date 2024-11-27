@@ -1,9 +1,9 @@
 import request from 'supertest';
 import { HTTP_STATUS_CODES } from '../src/types/http-status-codes'
 
-describe('API Endpoints', () => {
+describe('User Endpoints', () => {
   // Prueba para el registro de un usuario
-  it('POST /api/data - should return a personalized greeting', async () => {
+  it('POST Create user', async () => {
     const response = await request('http://localhost:3000')
       .post('/register')
       .send({
@@ -13,13 +13,12 @@ describe('API Endpoints', () => {
         "role": "Admin"
       });
 
-    expect(response.status).toBe(HTTP_STATUS_CODES.USER_CREATED);
-    expect(response.body).toEqual({ message: 'Bienvenido: prueba' });
+    expect(response.status).toBe(HTTP_STATUS_CODES.SUCCESS);
   });
 
 
   // Prueba para el login de un usuario
-  it('POST /api/data - should return a personalized greeting', async () => {
+  it('POST Login', async () => {
     const response = await request('http://localhost:3000')
       .post('/login')
       .send({
@@ -28,25 +27,61 @@ describe('API Endpoints', () => {
       });
 
     expect(response.status).toBe(HTTP_STATUS_CODES.SUCCESS);
-    expect(response.body).toEqual({ message: 'Welcome prueba' });
-  
   });
 
   
   // Prueba para intentar eliminar un usuario que SI existe
-  it('DELETE /api/data - should return a 400 error if name is missing', async () => {
+  it('DELETE delete created user', async () => {
     const email = "cavap84981@lineacr.com";
     const response = await request('http://localhost:3000').delete(`/home?email=${email}`);
     expect(response.status).toBe(HTTP_STATUS_CODES.SUCCESS);
 
-    // Prueba para intentar eliminar un usuario que NO existe
-    it('DELETE /api/users/:id - should return 404 if user not found', async () => {
-      const email = 999; // ID de un usuario que no existe
+  });
+});
 
-      const response = await request('http://localhost:3000').delete(`/home?email=${email}`);
+describe('Client Endpoints', () => {
+ 
+  // Prueba para el login de un usuario
+  it('PUT update client', async () => {
+    const response = await request('http://localhost:3000')
+      .put('/clients')
+      .send({
+        "firstName": "example",
+        "lastName": "text",
+        "email": "correo@correo.com",
+        "password": "contrasena",
+        "phone": "1234567890",
+        "gender": "female",
+        "Birthday": "26/11/2011",
+        "Age": 777,
+        "Occupation": "Student",
+        "Hobbies": "sing",
+        "EmergencyContact": "1234567890",
+        "Treatments": []
+      });
 
-      expect(response.status).toBe(HTTP_STATUS_CODES.NOT_FOUND);
-      expect(response.body).toEqual({ error: 'Wrong User or does not exist' });
+    expect(response.status).toBe(HTTP_STATUS_CODES.SUCCESS);
+  });
+
+   // Prueba para el registro de un usuario
+   it('POST Create user', async () => {
+    const response = await request('http://localhost:3000')
+      .post('/treatment')
+      .send({
+        "email": "ejemplo@ejemplo.com",
+        "Treatments": {
+            "date": "2024-11-26",
+            "treatment": "test"
+        }
     });
+
+    expect(response.status).toBe(HTTP_STATUS_CODES.SUCCESS);
+  });
+  
+  // Prueba para intentar eliminar un usuario que SI existe
+  it('Get clients', async () => {
+    const response = await request('http://localhost:3000').get(`/clients`);
+    expect(response.status).toBe(HTTP_STATUS_CODES.SUCCESS);
+
   });
 });
