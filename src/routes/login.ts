@@ -41,7 +41,7 @@ router.use(cookieParser(process.env.secretKey));
  *         description: Server error.
  */
 router.post('', auth.loginUser, (req, res) => {
-    console.log('Req user?',req.user);
+    console.log('Req user?', req.body.OtherUser);
     const name = req.body.OtherUser?.name;
     res.send(`Welcome ${name}`);
 })
@@ -70,7 +70,7 @@ router.post('', auth.loginUser, (req, res) => {
  *         description: Server error.
  */
 router.get('', authMiddleware, (req, res) => {
-    console.log('Req user?',req.user);
+    console.log('Req user?', req.body.OtherUser);
     const name = req.body.OtherUser?.name;
     res.send(`Welcome ${name}`);
 })
