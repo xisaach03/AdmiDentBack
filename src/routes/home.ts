@@ -1,7 +1,8 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import { deleteByEmail, getAll, getByEmail, updateByEmail , getImages } from "../models/crud"
 import { HTTP_STATUS_CODES } from "../types/http-status-codes";
 import { uploadImageToS3, upload } from '../controllers/s3.controller';
+import { saveImageToClient } from "../middlewares/images.middleware";
 
 const router = Router();
 
@@ -122,6 +123,7 @@ interface MulterRequest extends Request {
 }
 
 router.post('/upload', upload.single('image'), async (req: MulterRequest, res: Response): Promise<void> => {
+  const email = req.query.email
   try {
     if (!req.file) {
       res.status(HTTP_STATUS_CODES.NOT_FOUND).json({ message: 'Please upload a file.' });
@@ -134,7 +136,14 @@ router.post('/upload', upload.single('image'), async (req: MulterRequest, res: R
     // Llamada al servicio para subir imagen a S3 y guardar en MongoDB
     const imageUrl = await uploadImageToS3(req.file);
 
-    res.status(HTTP_STATUS_CODES.SUCCESS).json({ message: 'File uploaded successfully', url: imageUrl });
+    const isSaved = await saveImageToClient(email as string, imageUrl)
+
+    if(isSaved){
+      res.status(HTTP_STATUS_CODES.SUCCESS).json({ message: 'File uploaded successfully', url: imageUrl });
+    } else {
+      res.status(HTTP_STATUS_CODES.SERVER_ERROR).json({ message: 'Error uploading file'});
+    }
+    
   } catch (error) {
     res.status(HTTP_STATUS_CODES.SERVER_ERROR).json({ message: 'Error uploading file', error: (error as Error).message });
   }

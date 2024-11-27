@@ -5,9 +5,5 @@ const router = Router();
 
 router.post('', createTreatment);
 router.put('', updateTreatment);
-// router.get('', getClients);
-// router.get('/:id', getClientById);
-// router.put('', updateClient);
-// router.delete('/:id', deleteClient);
 
 export default router;

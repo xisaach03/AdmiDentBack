@@ -13,7 +13,8 @@ const clientSchema = new Schema({
   Occupation: { tpye: String },
   Hobbies: { type: String },
   EmergencyContact: { type: String },
-  Treatments: { type: Array }
+  Treatments: { type: Array<Treatment> },
+  Images: { type: Array<String>}
 });
 
 const client = model('Client', clientSchema);

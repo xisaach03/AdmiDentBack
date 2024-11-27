@@ -1,7 +1,7 @@
 // src/services/uploadService.ts
 import multer from 'multer';
 import path from 'path';
-import {S3Client , PutObjectCommand , ObjectCannedACL } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, ObjectCannedACL } from "@aws-sdk/client-s3";
 import Image from '../types/image';
 
 // Configuración de S3
