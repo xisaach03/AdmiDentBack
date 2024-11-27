@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import jwt from "jsonwebtoken";  // Asegúrate de instalar este paquete
+import { IUser } from "../types/user";
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -19,10 +20,13 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       // Crear un objeto de usuario
-      const user = {
-        id: profile.id,
-        displayName: profile.displayName,
-        email: profile.emails?.[0]?.value,
+      const user: IUser = {
+        token: accessToken,
+        name: profile.displayName,
+        email: profile.emails?.[0]?.value || '',
+        password: '',
+        role: '',
+        status: ''
       };
 
       // Generar un JWT para el usuario

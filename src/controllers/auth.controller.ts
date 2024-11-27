@@ -35,7 +35,7 @@ class AuthController {
     
         if (pswdValid) {
             req.body.found = pswdValid;
-            req.body.user = user;
+            req.body.OtherUser = user;
             res.cookie('user', JSON.stringify(user), { signed: true , httpOnly : false});
 
             res.sendStatus(HTTP_STATUS_CODES.SUCCESS);

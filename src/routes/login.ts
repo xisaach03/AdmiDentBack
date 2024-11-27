@@ -42,7 +42,7 @@ router.use(cookieParser(process.env.secretKey));
  */
 router.post('', auth.loginUser, (req, res) => {
     console.log('Req user?',req.user);
-    const name = req.user?.name;
+    const name = req.body.OtherUser?.name;
     res.send(`Welcome ${name}`);
 })
 
@@ -71,7 +71,7 @@ router.post('', auth.loginUser, (req, res) => {
  */
 router.get('', authMiddleware, (req, res) => {
     console.log('Req user?',req.user);
-    const name = req.user?.name;
+    const name = req.body.OtherUser?.name;
     res.send(`Welcome ${name}`);
 })
 //Test
