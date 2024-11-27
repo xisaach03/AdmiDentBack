@@ -1,5 +1,5 @@
-import { Router, Request, Response, NextFunction } from "express";
-import { deleteByEmail, getAll, getByEmail, updateByEmail , getImages } from "../models/crud"
+import { Router, Request, Response } from "express";
+import { deleteByEmail, getAll, updateByEmail , getImages } from "../models/crud"
 import { HTTP_STATUS_CODES } from "../types/http-status-codes";
 import { uploadImageToS3, upload } from '../controllers/s3.controller';
 import { saveImageToClient } from "../middlewares/images.middleware";

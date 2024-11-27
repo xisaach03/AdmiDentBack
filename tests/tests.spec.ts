@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { HTTP_STATUS_CODES } from '../types/http-status-codes';
+import { HTTP_STATUS_CODES } from '../src/types/http-status-codes'
 
 describe('API Endpoints', () => {
   // Prueba para el registro de un usuario
@@ -12,9 +12,11 @@ describe('API Endpoints', () => {
         "password": "contrasena",
         "role": "Admin"
       });
+
     expect(response.status).toBe(HTTP_STATUS_CODES.USER_CREATED);
     expect(response.body).toEqual({ message: 'Bienvenido: prueba' });
   });
+
 
   // Prueba para el login de un usuario
   it('POST /api/data - should return a personalized greeting', async () => {
@@ -24,10 +26,13 @@ describe('API Endpoints', () => {
         "email": "cavap84981@lineacr.com",
         "password": "contrasena"
       });
+
     expect(response.status).toBe(HTTP_STATUS_CODES.SUCCESS);
     expect(response.body).toEqual({ message: 'Welcome prueba' });
+  
   });
 
+  
   // Prueba para intentar eliminar un usuario que SI existe
   it('DELETE /api/data - should return a 400 error if name is missing', async () => {
     const email = "cavap84981@lineacr.com";
