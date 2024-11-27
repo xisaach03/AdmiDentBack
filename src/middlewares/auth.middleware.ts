@@ -5,7 +5,7 @@ import { HTTP_STATUS_CODES } from '../types/http-status-codes';
 
 declare global {
   namespace Express {
-      interface User extends IUser {}
+      interface IUser extends User {}
   }
 }
 
