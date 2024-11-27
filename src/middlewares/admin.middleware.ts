@@ -8,7 +8,6 @@ const SALT_ROUNDS = 7;
 export const isAdminMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
     const { role } = req.body;
-    console.log("role: ", role)
     if( role === 'Admin'){
         res.sendStatus(HTTP_STATUS_CODES.SUCCESS)
     } else {
@@ -35,7 +34,7 @@ export const changePassword = async (req: Request, res: Response) => {
         }
         res.status(HTTP_STATUS_CODES.NO_CONTENT).json(user)
     } catch {
-        throw new Error('Wrong User or does not exist');
+        res.status(HTTP_STATUS_CODES.BAD_REQUEST)
     }
 }
 
@@ -56,7 +55,7 @@ export const changeRole = async (req: Request, res: Response) => {
         }
         res.status(HTTP_STATUS_CODES.NO_CONTENT).json(user)
     } catch {
-        throw new Error('Wrong User or does not exist');
+        res.status(HTTP_STATUS_CODES.NOT_FOUND).send('Wrong User or does not exist');
     }
 }
 
@@ -77,6 +76,6 @@ export const changeStatus = async (req: Request, res: Response) => {
         }
         res.status(HTTP_STATUS_CODES.NO_CONTENT).json(user)
     } catch {
-        throw new Error('Wrong User or does not exist');
+        res.status(HTTP_STATUS_CODES.NOT_FOUND).send('Wrong User or does not exist');
     }
 }

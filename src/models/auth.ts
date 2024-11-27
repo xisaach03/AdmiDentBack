@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import User from '../models/users'
 import { NextFunction, Request, Response } from 'express';
+import { HTTP_STATUS_CODES } from '../types/http-status-codes';
 
 
 const SALT_ROUNDS = 7;
@@ -41,19 +42,18 @@ class Authenticator {
 
     loginUser = async (req: Request, res: Response, next: NextFunction) => {
         const { email, password } = req.body;
-        console.log(password)
         const user = await User.findOne({ email });
         if (!user) {
-            throw new Error('Wrong email');
+           res.status(HTTP_STATUS_CODES.NOT_FOUND).send("User not found");
         }
 
-        if (user.status != 'active') {
-            throw new Error('Account desactivated');
+        if (user!.status != 'active') {
+            res.status(HTTP_STATUS_CODES.NOT_FOUND).send('Account desactivated');
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        const isPasswordValid = await bcrypt.compare(password, user!.password);
         if (!isPasswordValid) {
-            throw new Error('Wrong password')
+            res.status(HTTP_STATUS_CODES.BAD_REQUEST).send('Wrong password')
         }
         return user;
     }

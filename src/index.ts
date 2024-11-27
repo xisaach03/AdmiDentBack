@@ -27,7 +27,6 @@ app.use(cors({
 }));
 
 const dbUrl = process.env.DB_URL;
-console.log('Mongo URL: ', dbUrl);
 
 const swaggerDocs = swaggerJsDoc(swaggerConfig);
 app.use('/swagger', serve, setup(swaggerDocs));

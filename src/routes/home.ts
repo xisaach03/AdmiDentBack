@@ -124,7 +124,6 @@ interface MulterRequest extends Request {
 
 router.post('/upload', upload.single('image'), async (req: MulterRequest, res: Response): Promise<void> => {
   const email = req.headers['email'] as string; // Leer el email desde los encabezados
-  console.log('Email recibido:', email); // Verifica que el email se recibe correctamente
 
   try {
     if (!req.file) {
@@ -132,8 +131,6 @@ router.post('/upload', upload.single('image'), async (req: MulterRequest, res: R
       return; // Aquí no devolvemos un Response, solo enviamos la respuesta.
 
     }
-
-    console.log('Archivo recibido:', req.file); // Esto te ayudará a verificar si el archivo está llegando
 
     // Llamada al servicio para subir imagen a S3 y guardar en MongoDB
     const imageUrl = await uploadImageToS3(req.file);

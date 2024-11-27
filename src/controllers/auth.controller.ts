@@ -8,14 +8,10 @@ import { sendNotification } from "./socket.controller";
 class AuthController { 
     //Registro
     registerUser = async (req: Request, res: Response, next: NextFunction) => {
-        console.log(req.body)
         const { name, email, password, role } = req.body;
 
         try {
             const user = await auth.registerUser(name, email, password, role);
-
-            // Simulación de registro (aquí podrías agregar la lógica real con una base de datos)
-            console.log('Nuevo usuario registrado:', name);
 
             // Enviar notificación a todos los clientes conectados
             sendNotification(`El usuario ${name} registrado exitosamente`);

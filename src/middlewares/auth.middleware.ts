@@ -17,10 +17,7 @@ declare module 'passport' {
 }
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  console.log('Signed cookies: ', req.signedCookies)
     const signedUser = req.signedCookies.user;
-    console.log('Signed cookie: ', signedUser);
-    
     if (signedUser) {
         req.user = JSON.parse(signedUser);
         next();

@@ -16,17 +16,15 @@ const SALT_ROUNDS = 7;
 export const getAll = async (req: Request, res: Response) => {
     try {
         const users = await User.find({});
-        console.log(users);
         res.send(users)
       } catch (err) {
-        console.error(err);
+        res.send("Users not found")
       }
 }
 
 //LISTO: http://localhost:3000/home?email=JohnDoe@example.com
 export const getByEmail = async (req: Request, res: Response) => {
     const { email } = req.query
-    console.log("email:", email)
     try {
         const user = await User.findOne({ email: email })
         res.status(HTTP_STATUS_CODES.SUCCESS).json(user)
@@ -39,7 +37,6 @@ export const getByEmail = async (req: Request, res: Response) => {
 //LISTO: http://localhost:3000/home?email=JohnDoe@example.com
 export const deleteByEmail = async (req: Request, res: Response) => {
     const { email } = req.query
-    console.log("email:", email)
     try {
         const user = await User.deleteOne({ email: email });
         res.status(HTTP_STATUS_CODES.SUCCESS).json(user)
@@ -51,7 +48,6 @@ export const deleteByEmail = async (req: Request, res: Response) => {
 //LISTO http://localhost:3000/home?email=JohnDoe@example.com&name=Lechuga
 export const updateByEmail = async (req: Request, res: Response) => {
     const { email, name, status } = req.query
-    console.log("email:", email)
     try {
         const user = await User.findOne({ email: email })
         
@@ -77,10 +73,9 @@ export const updateByEmail = async (req: Request, res: Response) => {
 export const getImages = async (req : Request , res : Response) =>{
     try {
         const images = await Image.find({});
-        console.log(images);
         res.send(images)
       } catch (err) {
-        console.error(err);
+        res.send("Images not found")
       }
 }
 

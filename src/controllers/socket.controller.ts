@@ -11,9 +11,7 @@ export const initializeSocket = (_io: Server) => {
             console.log('Cliente desconectado:', socket.id);
         });
         
-        socket.on('sendNotification', (data: string) => {
-            console.log('datos del front:', data)
-        })
+        socket.on('sendNotification', (data: string) => { })
   });
 
   io = _io;

@@ -30,10 +30,8 @@ export function sendRegisterEmail(req: Request, res: Response) {
     };
 
     transporter.sendMail(mailOptions).then(response => {
-        console.log('Response: ', response);
         res.send(`Bienvenido: ${name}`,).status(HTTP_STATUS_CODES.USER_CREATED);
     }).catch(error => {
-        console.log('Error: ', error);
         res.send('Failed to send email').status(HTTP_STATUS_CODES.BAD_REQUEST);
     })
 }
