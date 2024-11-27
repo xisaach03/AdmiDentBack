@@ -12,6 +12,7 @@ import cookieParser from 'cookie-parser';
 import { Express } from 'express-serve-static-core';
 import session from "express-session";
 import passport from "./middlewares/google-auth";
+import { error } from 'console';
 
 
 config();
@@ -27,7 +28,6 @@ app.use(cors({
 }));
 
 const dbUrl = process.env.DB_URL;
-console.log('Mongo URL: ', dbUrl);
 
 const swaggerDocs = swaggerJsDoc(swaggerConfig);
 app.use('/swagger', serve, setup(swaggerDocs));
@@ -68,7 +68,7 @@ connect(dbUrl as string)
         initializeSocket(io);
 
     })
-    .catch(err => {
+    .catch(err: error => {
         console.error('Error de conexión a MongoDB:', err);
     });
 function googleAuth(app: Express) {
