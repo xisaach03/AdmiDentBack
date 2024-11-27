@@ -31,6 +31,7 @@ export const changePassword = async (req: Request, res: Response) => {
         if (user) {
             const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
             user.password = hashedPassword;
+            User.findOneAndUpdate({email}, {password: newPassword})
         }
         res.status(HTTP_STATUS_CODES.NO_CONTENT).json(user)
     } catch {
@@ -52,6 +53,7 @@ export const changeRole = async (req: Request, res: Response) => {
         if (user) {
             const hashedRole = await bcrypt.hash(newRole, SALT_ROUNDS);
             user.role = hashedRole;
+            User.findOneAndUpdate({email}, {role: hashedRole})
         }
         res.status(HTTP_STATUS_CODES.NO_CONTENT).json(user)
     } catch {
@@ -71,8 +73,8 @@ export const changeStatus = async (req: Request, res: Response) => {
     try {
         const user = await User.findOne({ email: email });
         if (user) {
-            const hashedStatus = await bcrypt.hash(newStatus, SALT_ROUNDS);
-            user.status = hashedStatus;
+            user.status = newStatus;
+            User.findOneAndUpdate({email}, {status: newStatus})
         }
         res.status(HTTP_STATUS_CODES.NO_CONTENT).json(user)
     } catch {
