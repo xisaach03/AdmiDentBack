@@ -4,7 +4,7 @@ import { HTTP_STATUS_CODES } from '../src/types/http-status-codes'
 describe('User Endpoints', () => {
   // Prueba para el registro de un usuario
   it('POST Create user', async () => {
-    const response = await request('http://localhost:3000')
+    const response = await request('https://admidentback.onrender.com')
       .post('/register')
       .send({
         "name": "prueba",
@@ -19,7 +19,7 @@ describe('User Endpoints', () => {
 
   // Prueba para el login de un usuario
   it('POST Login', async () => {
-    const response = await request('http://localhost:3000')
+    const response = await request('https://admidentback.onrender.com')
       .post('/login')
       .send({
         "email": "cavap84981@lineacr.com",
@@ -33,7 +33,7 @@ describe('User Endpoints', () => {
   // Prueba para intentar eliminar un usuario que SI existe
   it('DELETE delete created user', async () => {
     const email = "cavap84981@lineacr.com";
-    const response = await request('http://localhost:3000').delete(`/home?email=${email}`);
+    const response = await request('https://admidentback.onrender.com').delete(`/home?email=${email}`);
     expect(response.status).toBe(HTTP_STATUS_CODES.SUCCESS);
 
   });
@@ -43,7 +43,7 @@ describe('Client Endpoints', () => {
  
   // Prueba para el login de un usuario
   it('PUT update client', async () => {
-    const response = await request('http://localhost:3000')
+    const response = await request('https://admidentback.onrender.com')
       .put('/clients')
       .send({
         "firstName": "example",
@@ -65,7 +65,7 @@ describe('Client Endpoints', () => {
 
    // Prueba para el registro de un usuario
    it('POST Create user', async () => {
-    const response = await request('http://localhost:3000')
+    const response = await request('https://admidentback.onrender.com')
       .post('/treatment')
       .send({
         "email": "ejemplo@ejemplo.com",
@@ -80,7 +80,7 @@ describe('Client Endpoints', () => {
   
   // Prueba para intentar eliminar un usuario que SI existe
   it('Get clients', async () => {
-    const response = await request('http://localhost:3000').get(`/clients`);
+    const response = await request('https://admidentback.onrender.com').get(`/clients`);
     expect(response.status).toBe(HTTP_STATUS_CODES.SUCCESS);
 
   });

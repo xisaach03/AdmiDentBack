@@ -8,7 +8,7 @@ const SALT_ROUNDS = 7;
 
 class Authenticator {
 
-//LISTO: http://localhost:3000/register
+//LISTO: https://admidentback.onrender.com/register
 /* PARA PROBAR EN POSTMAN
 {
   "name": "John",

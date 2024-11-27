@@ -22,7 +22,7 @@ export const getAll = async (req: Request, res: Response) => {
       }
 }
 
-//LISTO: http://localhost:3000/home?email=JohnDoe@example.com
+//LISTO: https://admidentback.onrender.com/home?email=JohnDoe@example.com
 export const getByEmail = async (req: Request, res: Response) => {
     const { email } = req.query
     try {
@@ -34,7 +34,7 @@ export const getByEmail = async (req: Request, res: Response) => {
     }
 }
 
-//LISTO: http://localhost:3000/home?email=JohnDoe@example.com
+//LISTO: https://admidentback.onrender.com/home?email=JohnDoe@example.com
 export const deleteByEmail = async (req: Request, res: Response) => {
     const { email } = req.query
     try {
@@ -45,7 +45,7 @@ export const deleteByEmail = async (req: Request, res: Response) => {
     }
 }
 
-//LISTO http://localhost:3000/home?email=JohnDoe@example.com&name=Lechuga
+//LISTO https://admidentback.onrender.com/home?email=JohnDoe@example.com&name=Lechuga
 export const updateByEmail = async (req: Request, res: Response) => {
     const { email, name, status } = req.query
     try {
