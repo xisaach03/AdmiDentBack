@@ -4,6 +4,8 @@ import auth from "../models/auth";
 import User from '../models/users'
 import bcrypt from 'bcrypt';
 import { sendNotification } from "./socket.controller";
+import { generateToken } from "./token.controller";
+import { IUser } from '../types/user';
 
 class AuthController { 
     //Registro
@@ -28,13 +30,20 @@ class AuthController {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
         const pswdValid = await bcrypt.compare(password, user?.password as string);
-    
-        if (pswdValid) {
-            req.body.found = pswdValid;
-            req.body.OtherUser = user;
-            res.cookie('user', JSON.stringify(user), { signed: true , httpOnly : false});
+        const { password: _, ...userEdited } = user ? user.toObject() : {};
 
-            res.sendStatus(HTTP_STATUS_CODES.SUCCESS);
+        if (pswdValid) {
+
+            const { name, email, role } = user!.toObject();
+            const anotherUser: IUser = { name, email, role, token:'' };
+
+            // console.log('anotherUser: ', anotherUser)
+            console.log(generateToken(anotherUser))
+            req.body.found = pswdValid;
+            req.body.OtherUser = userEdited;
+            //res.cookie('user', JSON.stringify(user), { signed: false, httpOnly : false});
+            //ofuscar
+           res.send(userEdited)
         } else if (!pswdValid) {
             res.sendStatus(HTTP_STATUS_CODES.AUTHORIZATION);
         } else {    
